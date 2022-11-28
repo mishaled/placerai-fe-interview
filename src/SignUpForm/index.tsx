@@ -31,15 +31,7 @@ const SignUpForm = () => {
     const onSubmit = useCallback(
         (event: FormEvent) => {
             event.preventDefault();
-            // console.log('isform', {
-            //     isFormValid,
-            //     name,
-            //     lastName,
-            //     email,
-            //     password,
-            //     chosenCity,
-            //     chosenState,
-            // });
+
             if (!isFormValid) {
                 setShowErrors(true);
                 return;

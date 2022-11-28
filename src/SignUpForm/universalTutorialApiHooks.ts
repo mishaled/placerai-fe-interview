@@ -5,11 +5,14 @@ let token: string | undefined;
 
 const BASE_URL = 'https://www.universal-tutorial.com/api';
 
+const API_TOKEN = 'd2KSS7-zZ5-2vid0t1wwtxjTVY0bHTeXM43JolHdO6gmJlqMzfe_MdjbdNVYgg4uaMk';
+const USER_EMAIL = 'michaelv@soluto.com';
+
 const initializeToken = async () => {
     const result = await fetch(`${BASE_URL}/getaccesstoken`, {
         headers: {
-            'api-token': 'd2KSS7-zZ5-2vid0t1wwtxjTVY0bHTeXM43JolHdO6gmJlqMzfe_MdjbdNVYgg4uaMk',
-            'user-email': 'michaelv@soluto.com',
+            'api-token': API_TOKEN,
+            'user-email': USER_EMAIL,
         },
     });
 
