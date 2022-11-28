@@ -19,8 +19,8 @@ const StyledSubmitButton = styled(Button)`
 `;
 
 const SignUpForm = () => {
-    const [chosenState, setChosenState] = useState<State | undefined>();
-    const [chosenCity, setChosenCity] = useState<City | undefined>();
+    const [chosenState, setChosenState] = useState<string | undefined>();
+    const [chosenCity, setChosenCity] = useState<string | undefined>();
     const [name, setName] = useState<string | undefined>();
     const [lastName, setLastName] = useState<string | undefined>();
     const [email, setEmail] = useState<string | undefined>();
@@ -31,15 +31,15 @@ const SignUpForm = () => {
     const onSubmit = useCallback(
         (event: FormEvent) => {
             event.preventDefault();
-            console.log('isform', {
-                isFormValid,
-                name,
-                lastName,
-                email,
-                password,
-                chosenCity,
-                chosenState,
-            });
+            // console.log('isform', {
+            //     isFormValid,
+            //     name,
+            //     lastName,
+            //     email,
+            //     password,
+            //     chosenCity,
+            //     chosenState,
+            // });
             if (!isFormValid) {
                 setShowErrors(true);
                 return;
@@ -48,8 +48,8 @@ const SignUpForm = () => {
             submitRequest({
                 firstName: name!,
                 lastName: lastName!,
-                country: chosenState!.state_name,
-                city: chosenCity!.city_name,
+                country: chosenState!,
+                city: chosenCity!,
                 email: email!,
                 password: password!,
             });

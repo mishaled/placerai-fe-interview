@@ -1,10 +1,9 @@
 import {useMemo} from 'react';
 import {Autocomplete, styled, TextField} from '@mui/material';
 import {useStates} from '../universalTutorialApiHooks';
-import {State} from '../types';
 
 type Props = {
-    onStateChange: (val: State) => void;
+    onStateChange: (val: string) => void;
 };
 
 const StyledAutocomplete = styled(Autocomplete)`
@@ -20,7 +19,7 @@ const StateAutocompleteComponent = ({onStateChange}: Props) => {
             disablePortal
             options={parsedCities ?? []}
             sx={{width: 300}}
-            onChange={(_event, value) => onStateChange(value as State)}
+            onChange={(_event, value) => onStateChange(value as string)}
             renderInput={(params) => <TextField {...params} label="USA State" />}
             loading={!states && !error}
             fullWidth

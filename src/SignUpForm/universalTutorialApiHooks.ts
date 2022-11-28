@@ -1,4 +1,5 @@
 import {useEffect, useState} from 'react';
+import {City, State} from './types';
 
 let token: string | undefined;
 
@@ -49,8 +50,6 @@ const useFetchedValues = <T>(url: string): FetchResult<T> => {
         const fetchCities = async () => {
             try {
                 const rawResult = await fetchWithAuth(url);
-
-                console.log('raw', rawResult);
                 setValue(rawResult);
             } catch (err: any) {
                 setError(err);
@@ -63,6 +62,6 @@ const useFetchedValues = <T>(url: string): FetchResult<T> => {
     return {value, error};
 };
 
-export const useStates = () => useFetchedValues<{state_name: string}[]>(`${BASE_URL}/states/United States`);
+export const useStates = () => useFetchedValues<State[]>(`${BASE_URL}/states/United States`);
 
-export const useCities = (state?: string) => useFetchedValues<{city_name: string}[]>(`${BASE_URL}/cities/${state}`);
+export const useCities = (state?: string) => useFetchedValues<City[]>(`${BASE_URL}/cities/${state}`);
