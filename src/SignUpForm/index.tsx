@@ -1,7 +1,7 @@
 import {FormEvent, useCallback, useMemo, useState} from 'react';
 import {Button} from '@mui/material';
 import styled from 'styled-components';
-import {City, State} from './types';
+import {UserData} from './types';
 import StateAutocompleteComponent from './components/StateAutocompleteComponent';
 import CityAutocompleteComponent from './components/CityAutocompleteComponent';
 import submitRequest from './submitRequest';
@@ -19,13 +19,7 @@ const StyledSubmitButton = styled(Button)`
 `;
 
 const SignUpForm = () => {
-    const [chosenState, setChosenState] = useState<string | undefined>();
-    const [chosenCity, setChosenCity] = useState<string | undefined>();
-    const [name, setName] = useState<string | undefined>();
-    const [lastName, setLastName] = useState<string | undefined>();
-    const [email, setEmail] = useState<string | undefined>();
-    const [password, setPassword] = useState<string | undefined>();
-
+    const [userData, setUserData] = useState<Partial<UserData>>({});
     const [showErrors, setShowErrors] = useState<boolean>(false);
 
     const onSubmit = useCallback(
@@ -36,43 +30,40 @@ const SignUpForm = () => {
                 setShowErrors(true);
                 return;
             }
+            console.log({userData, isFormValid});
 
-            submitRequest({
-                firstName: name!,
-                lastName: lastName!,
-                country: chosenState!,
-                city: chosenCity!,
-                email: email!,
-                password: password!,
-            });
+            submitRequest(userData as UserData);
         },
-        [name, lastName, email, password, chosenCity, chosenState],
+        [userData],
     );
 
-    const isFormValid = useMemo(
-        () => !!name && !!lastName && !!email && !!password && !!chosenCity && !!chosenState,
-        [name, lastName, email, password, chosenCity, chosenState],
-    );
+    const isFormValid = useMemo(() => !Object.keys(userData).filter((x) => !x?.length).length, [userData]);
 
     return (
         <Form onSubmit={onSubmit}>
             <SimpleTextField
-                onChange={(value) => setName(value)}
+                onChange={(val) => setUserData({...userData, firstName: val})}
                 label="First Name"
                 showErrors={showErrors}
                 type="text"
             />
             <SimpleTextField
-                onChange={(value) => setLastName(value)}
+                onChange={(val) => setUserData({...userData, lastName: val})}
                 label="Last Name"
                 showErrors={showErrors}
                 type="text"
             />
-            <StateAutocompleteComponent onStateChange={(val) => setChosenState(val)} />
-            <CityAutocompleteComponent onCityChange={(val) => setChosenCity(val)} state={chosenState} />
-            <EmailInputComponent onChange={(email) => setEmail(email)} showErrors={showErrors} />
+            <StateAutocompleteComponent onStateChange={(val) => setUserData({...userData, country: val})} />
+            <CityAutocompleteComponent
+                state={userData.country}
+                onCityChange={(val) => setUserData({...userData, city: val})}
+            />
+            <EmailInputComponent
+                onChange={(email) => setUserData({...userData, email: email})}
+                showErrors={showErrors}
+            />
             <SimpleTextField
-                onChange={(value) => setPassword(value)}
+                onChange={(val) => setUserData({...userData, password: val})}
                 label="Password"
                 showErrors={showErrors}
                 type="password"

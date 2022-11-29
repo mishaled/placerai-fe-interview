@@ -11,7 +11,7 @@ const EmailInputComponent = ({onChange, showErrors}: Props) => {
     const [email, setEmail] = useState<string | undefined>();
 
     const handleOnChange = useCallback(
-        (event: any) => {
+        (event: React.ChangeEvent<HTMLInputElement>) => {
             const currentValue = event.target.value;
             setEmail(currentValue);
 
